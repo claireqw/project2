@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flack</title>
+    <style>
+      .react {
+        float: right;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="{{ url_for('static', filename='channel.js') }}"></script>
+    <script id="channelid">{{ channel.id }}</script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Flack</h1>
+      <h3>{{ channel.name }}</h3>
+
+      <div id="msg-display">
+        <ul class="list-group">
+          {% for message in channel.messages %}
+              <li class="list-group-item msg">
+
+
+               {{ message.content }}
+               <button class="react btn btn-link">✩</button>
+
+              <br><small class="text-muted">{{ message.username }} {{ message.time }}</small>
+            </li>
+          {% endfor %}
+        </ul>
+
+      </div>
+
+      <br><br>
+
+      <div class="input-group mb-3" id="type">
+        <input type="text" class="form-control" id="userMsg" placeholder="Write a message">
+        <div class="input-group-append">
+          <button class="btn btn-outline-primary" type="button" id="sendMsg">SEND</button>
+        </div>
+      </div>
+
+      <ul id="votes">
+      </ul>
+      <div id="channels">
+        <h3>View all channels</h3>
+        <ul id="channellist">
+        {% for channel in channels %}
+          <li><a href="{{url_for('openCh', id=channel.id)}}" class="nav-link" data-page={{channel.id}}> {{ channel.name }} </a> </li>
+        {% endfor %}
+        </ul>
+        <form action="{{ url_for('index') }}" method="post">
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <input name="nameCh" type="text" class="form-control" placeholder="Create a new channel">
+              <div class="input-group-append">
+                <button id="namebutton" class="btn btn-outline-primary" type="submit" id="button-addon2">ADD</button>
+              </div>
+            </div>
+          </div>
+        </form>
+    </div>
+
+  </body>
+</html>

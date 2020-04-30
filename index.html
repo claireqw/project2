@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flack</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <script id="username" type="text/html">
+      Welcome to Flack!
+      <br><br>
+      <div class="input-group mb-3">
+        <input id="name" type="text" class="form-control" placeholder="What would you like people to call you?" aria-label="Username" aria-describedby="basic-addon1">
+        <div class="input-group-append">
+          <button id="namebutton" class="btn btn-outline-primary" type="button" id="button-addon2">ENTER</button>
+        </div>
+      </div>
+
+    </script>
+
+  </head>
+
+
+  <body>
+
+
+    <div class="container">
+      <h1>Flack</h1>
+      <div id="getname">
+      </div>
+
+      {% if displayAl %}
+        <div class="alert alert-primary" role="alert">
+          {{ alert }}
+        </div>
+      {% endif %}
+
+      <div id="channels">
+        <h3>Channels</h3>
+        <ul id="channellist">
+        {% for channel in channels %}
+          <li><a href="{{url_for('openCh', id=channel.id)}}" class="nav-link" data-page={{channel.id}}> {{ channel.name }} </a> </li>
+        {% endfor %}
+        </ul>
+        <form action="{{ url_for('index') }}" method="post">
+
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <input name="nameCh" type="text" class="form-control" placeholder="Create a new channel">
+              <div class="input-group-append">
+                <button id="namebutton" class="btn btn-outline-primary" type="submit" id="button-addon2">ADD</button>
+              </div>
+            </div>
+          </div>
+
+          
+
+        </form>
+
+      </div>
+    </div>
+
+  </body>
+</html>
